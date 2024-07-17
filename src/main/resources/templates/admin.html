@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <title>Users</title>
+</head>
+<body>
+<nav class="navbar sticky-top bg-dark text-white">
+        <span class="navbar-brand mb-0">
+            <span id="emailCurrentUser" style="font-weight: bold"></span> with roles:
+            <span id="roleCurrentUser"></span>
+        </span>
+    <a aria-pressed="true" class="btn text-white-50" href="/logout" role="button">Logout</a>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 bg-white pt-3 min-vh-100 px-0">
+            <div class="container-fluid px-0">
+                <ul class="nav flex-column nav-pills ">
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link active" href="#">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">User</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col pt-4 h-100 min-vh-100 bg-light">
+            <div class="container-fluid">
+                <h1 class="display-5 px-3 pb-3">Admin panel</h1>
+                <div class="container-fluid">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a aria-controls="home" aria-selected="true" class="nav-link active" data-toggle="tab" href="#home"
+                               id="home-tab" role="tab">Users table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#newUser"
+                               id="profile-tab" role="tab">New User</a>
+                        </li>
+                    </ul>
+                    <div class="tab-container bg-white border rounded ">
+                        <div class="tab-content bg-white " id="myTabContent">
+                            <div aria-labelledby="home-tab" class="tab-pane fade show active bg-white" id="home"
+                                 role="tabpanel">
+                                <div class="tab-container-fluid bg-light border-bottom pt-2 pb-1 px-0">
+                                    <h4 class="text-start px-4">All users</h4>
+                                </div>
+                                <div class="tab-content bg-white pt-4 px-4 pb-4">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="AllUsers">
+                                        </tbody>
+                                    </table>
+                                    <!--  Edit  -->
+                                    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="edit"
+                                         role="dialog" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                                                    <button aria-label="Close" class="close" data-dismiss="modal"
+                                                            type="button">
+                                                    </button>
+                                                </div>
+                                                <form id="formEdit">
+                                                    <div class="modal-body text-center pt-3">
+                                                        <div class="container-fluid align-middle w-50">
+                                                            <label class="form-label text-center h6"
+                                                                   for="Edit_id"><b>ID</b></label>
+                                                            <input aria-describedby="basic-addon1" class="form-control" disabled
+                                                                   id="Edit_id" name="id"
+                                                                   placeholder="ID" type="text">
+
+                                                            <label class="form-label text-center pt-3 h6"
+                                                                   for="Edit_username"><b>Username</b></label>
+                                                            <input aria-describedby="basic-addon1" class="form-control" id="Edit_username"
+                                                                   name="username" placeholder="Username"
+                                                                   required type="text">
+
+                                                            <label class="form-label text-center pt-3 h6"
+                                                                   for="Edit_email"><b>Email</b></label>
+                                                            <input aria-describedby="basic-addon1" class="form-control" id="Edit_email"
+                                                                   name="email" placeholder="Email"
+                                                                   required type="email">
+
+                                                            <label class="form-label text-center pt-3 h6"
+                                                                   for="Edit_password"><b>Password</b></label>
+                                                            <input aria-describedby="basic-addon1" class="form-control" id="Edit_password"
+                                                                   name="password" placeholder="Password"
+                                                                   required type="password">
+
+                                                            <label class="form-label text-center pt-3 h6"
+                                                                   for="Edit_rolesId"><b>Role</b></label>
+                                                            <select class="form-control" id="Edit_rolesId" multiple
+                                                                    name="roles"
+                                                                    required size="2">
+
+                                                                <option value="1">USER</option>
+                                                                <option value="2">ADMIN</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" data-dismiss="modal" id="closeEdit"
+                                                                type="button">Close
+                                                        </button>
+                                                        <button class="btn btn-primary" type="submit">Edit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Delete -->
+                                    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="delete"
+                                         role="dialog" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Delete</h5>
+                                                    <button aria-label="Close" class="close" data-dismiss="modal"
+                                                            type="button">
+                                                    </button>
+                                                </div>
+                                                <form id="formDelete">
+                                                    <div class="modal-body text-center pt-3">
+                                                        <div class="container-fluid align-middle w-50">
+                                                            <label class="form-label text-center h6" for="Edit_id1"><b>ID</b></label>
+                                                            <input aria-describedby="basic-addon1" class="form-control" disabled
+                                                                   id="Edit_id1" name="id"
+                                                                   placeholder="ID" type="number">
+                                                            <label class="form-label text-center pt-3 h6"
+                                                                   for="Edit_username1"><b>Username</b></label>
+                                                            <input aria-describedby="basic-addon1" class="form-control" disabled
+                                                                   id="Edit_username1" name="username"
+                                                                   placeholder="Username" type="text">
+                                                            <label class="form-label text-center pt-3 h6"
+                                                                   for="Edit_email1"><b>Email
+                                                                name</b></label>
+                                                            <input aria-describedby="basic-addon1" class="form-control" disabled
+                                                                   id="Edit_email1" name="email"
+                                                                   placeholder="Email" type="email">
+                                                            <label class="form-label text-center pt-3 h6"
+                                                                   for="Edit_rolesId1"><b>Role</b></label>
+                                                            <select class="form-control" disabled
+                                                                    id="Edit_rolesId1"
+                                                                    multiple name="roles" required size="2">
+                                                                <option value="1">USER</option>
+                                                                <option value="2">ADMIN</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" data-dismiss="modal" id="closeDelete"
+                                                                type="button">Close
+                                                        </button>
+                                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                            Create new user-->
+                            <div aria-labelledby="profile-tab" class="tab-pane fade" id="newUser" role="tabpanel">
+                                <div class="tab-container bg-white border-bottom rounded ">
+                                    <div class="tab-container-fluid bg-light border-bottom pt-2 pb-1 px-0">
+                                        <h4 class="text-start px-4">Add new user</h4>
+                                    </div>
+                                    <div class="m-4">
+                                        <form class="align-items-center pt-2" id="create">
+                                            <div class="d-flex flex-column align-items-center w-25 mx-auto">
+                                                <label class="form-label text-center h6" for="username"><b>Username</b></label>
+                                                <input aria-describedby="basic-addon1" class="form-control" id="username" name="username"
+                                                       placeholder="Username" required
+                                                       type="text">
+
+                                                <label class="form-label text-center pt-2 h6"
+                                                       for="emailC"><b>Email</b></label>
+                                                <input aria-describedby="basic-addon1" class="form-control" id="emailC" name="email"
+                                                       placeholder="Email" required type="email">
+                                                <label class="form-label text-center pt-2 h6"
+                                                       for="password"><b>Password</b></label>
+                                                <input aria-describedby="basic-addon1" class="form-control" id="password"
+                                                       name="password" placeholder="Password"
+                                                       required type="password">
+                                                <label class="form-label text-center pt-2 h6" for="rolesId"><b>Role</b></label>
+                                                <select class="form-control" id="rolesId"
+                                                        multiple
+                                                        name="roles" required size="2">
+                                                    <option value="1">ADMIN</option>
+                                                    <option value="2">USER</option>
+                                                </select>
+
+
+                                                <div class="mx-auto pt-4">
+                                                    <button class="btn btn-success btn-lg w-100" type="submit">Add new
+                                                        user
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script crossorigin="anonymous"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="../static/userPage.js"></script>
+<script src="../static/tableUser.js"></script>
+<script src="../static/createUserPage.js"></script>
+<script src="../static/deleteUserPage.js"></script>
+<script src="../static/modal.js"></script>
+<script src="../static/editUserPage.js"></script>
+
+</body>
+</html>

@@ -1,1 +1,1 @@
-Почти лишился разума с этим JS
+Spring Boot + Security + Bootstrap + JS

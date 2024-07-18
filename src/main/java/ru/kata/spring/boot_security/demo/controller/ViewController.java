@@ -11,7 +11,7 @@ public class ViewController {
         return "admin";
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user-api")
     public String showOneUser() {
         return "user";
     }

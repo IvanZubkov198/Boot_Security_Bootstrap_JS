@@ -18,5 +18,4 @@ function getCurrentUser() {
             $('#oneUser').append(u)
         })
 }
-
 getCurrentUser()

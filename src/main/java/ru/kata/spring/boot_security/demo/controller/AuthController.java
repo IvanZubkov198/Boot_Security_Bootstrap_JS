@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserServiceImp userService;
-    private final RoleService roleService;
 
 
     @GetMapping("/users")

@@ -2,7 +2,7 @@
 
 
 function getCurrentUser() {
-    fetch("userApi")
+    fetch("user")
         .then(res => res.json())
         .then(user => {
             const roles = user.roles.map(role => role.role).join(',')

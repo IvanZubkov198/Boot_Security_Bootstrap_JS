@@ -13,7 +13,7 @@ function createNewUser() {
                 role: "ROLE_" + form.roles.options[i].text
             });
         }
-        fetch("adminApi/user", {
+        fetch("admin/user", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

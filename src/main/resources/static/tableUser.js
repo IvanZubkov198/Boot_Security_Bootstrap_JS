@@ -4,7 +4,7 @@ getTableUser();
 
 function getTableUser() {
     tbody.empty();
-    fetch("adminApi/users")
+    fetch("admin/users")
         .then(res => res.json())
         .then(js => {
             console.log(js);
